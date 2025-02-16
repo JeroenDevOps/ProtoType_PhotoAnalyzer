@@ -73,18 +73,23 @@ public class CameraController : MonoBehaviour
     private void TakePicture(){
         Debug.Log("Snap!");
         _photoAnalysis.Clear();
+        Debug.Log("Test: " );
         for(int x = 0; x < _resolutionPhoto.x; x++){
             for(int y = 0; y < _resolutionPhoto.y; y++){
                 // not entirely sure why, but the image was flipped when I applied it to the Texture2D
-                // so substracting from the full resolution made the image come out right
+                // so substracting from the full resolution made the image come out correctly
                 float rayOriginX = _resolutionCamera.x - (x / _resolutionPhoto.x) * _resolutionCamera.x;
                 float rayOriginY = _resolutionCamera.y - (y / _resolutionPhoto.y) * _resolutionCamera.y;
                 
                 Vector3 rayOrigin = new Vector3(rayOriginX, rayOriginY, 0);
                 Color pixelColor = Color.black;
-                if(Physics.Raycast(_camPhoto.ScreenPointToRay(rayOrigin), out RaycastHit hit, Mathf.Infinity, _raycastLayer, QueryTriggerInteraction.UseGlobal)){
-                    pixelColor = hit.collider.gameObject.GetComponent<PhotoObjectDetailController>().GetColor();
+                if(Physics.Raycast(_camPhoto.ScreenPointToRay(rayOrigin), out RaycastHit hit, Mathf.Infinity)){
+                    
+                    if((_raycastLayer & (1 << hit.collider.gameObject.layer)) != 0){ //if the layer of the object hit is in the layermask
+                        pixelColor = hit.collider.gameObject.GetComponent<PhotoObjectDetailController>().GetColor();
+                    }
                 }
+                
                 _photoAnalysis.Add(new Vector2Int(x, y), pixelColor);
             }
         }
