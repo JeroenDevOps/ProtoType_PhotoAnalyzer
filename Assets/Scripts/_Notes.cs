@@ -15,7 +15,7 @@
         i.) Create a Texture2D and apply the colors to it
         ii.) Apply the Texture2D to a plane
 4. [x] Display the photo on a plane
-5. Store multiple photos (in a dictionary?) and make it able to display them. To start, just make it possible to switch between them on the same plane.
-
+5. [x] Store multiple photos (in a dictionary?) and make it able to display them. To start, just make it possible to switch between them on the same render object (plane).
+6. ...
 
 */

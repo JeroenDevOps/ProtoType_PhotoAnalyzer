@@ -12,12 +12,16 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _moveSpeedMain;
     [SerializeField] private float _moveSpeedPhoto;
     [SerializeField] private float _resolutionScalePhoto; //the scale difference between camera and photo
+    [SerializeField] private LayerMask _raycastLayer;
+    [SerializeField] private GameObject _displayObject;
     private Vector2 _resolutionPhoto;
     private Vector2 _resolutionCamera;
     private Dictionary<Vector2Int, Color> _photoAnalysis = new Dictionary<Vector2Int, Color>(); //(temp) dictionary for the photo analysis AND render creation
-    [SerializeField] private LayerMask _raycastLayer;
+    private int _photoCount = 0;
+    private int _photoDisplayNumber = -999; // set default as a number that will never be used
+    private Dictionary<int, Dictionary<Vector2Int, Color>> _photoAnalysisDict = new Dictionary<int, Dictionary<Vector2Int, Color>>(); //dictionary for the photo analysis of all photos
     private Texture2D _photoRender; 
-    [SerializeField] private GameObject _displayObject;
+    private Dictionary<int, Texture2D> _photoRenderDict = new Dictionary<int, Texture2D>(); //dictionary for the render of all photos
 
     private bool _isPhotoMode;
 
@@ -34,6 +38,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        #region ### Testing controls
         if(Input.GetKeyDown(KeyCode.Backspace)){
             _camMain.transform.position = new Vector3(0, 0, -10);
             _camPhoto.transform.position = new Vector3(0, 0, -8);
@@ -45,35 +50,56 @@ public class CameraController : MonoBehaviour
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             }
         }
+        #endregion
 
-
-        Vector3 movementInput = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);
+        #region ### Photo Controls
+        #region ### Photo Creation
+        int currentPhotoDisplay = _photoDisplayNumber;
         if(Input.GetMouseButton(1)){
             _isPhotoMode = true;
             if(Input.GetMouseButtonDown(0)){
                 TakePicture();
-            }
-            if(Input.GetMouseButtonUp(0)){
-                _displayObject.GetComponent<Renderer>().material.mainTexture = _photoRender;
-                Debug.Log("Display updated");
+                _photoDisplayNumber = _photoCount;
+                _photoCount++;
             }
         } else {
             _isPhotoMode = false;
         }
+        #endregion
+        #region ### Photo Display
+        if(_photoDisplayNumber != -999){
+            if(Input.GetKeyDown(KeyCode.LeftArrow)){
+                _photoDisplayNumber--;
+                if(_photoDisplayNumber < 0){
+                    _photoDisplayNumber = _photoAnalysisDict.Count - 1;
+                }
+            } 
+            if(Input.GetKeyDown(KeyCode.RightArrow)){
+                _photoDisplayNumber++;
+                if(_photoDisplayNumber >= _photoAnalysisDict.Count){
+                    _photoDisplayNumber = 0;
+                }
+            }
+        }
+        if(_photoDisplayNumber != -999 && currentPhotoDisplay != _photoDisplayNumber){
+            DisplayNewPhoto(_photoDisplayNumber);
+        }
+        #endregion 
+        #endregion
 
+        #region ### Camera Selection & Movement
         _camMain.enabled = !_isPhotoMode;
         _camPhoto.enabled = _isPhotoMode;
-
+        Vector3 movementInput = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);
         float moveSpeed = (_isPhotoMode) ? _moveSpeedPhoto : _moveSpeedMain;
         _camMain.transform.position += movementInput * moveSpeed * Time.deltaTime;
         _camPhoto.transform.position += movementInput * moveSpeed * Time.deltaTime;
+        #endregion
     }
 
 
     private void TakePicture(){
-        Debug.Log("Snap!");
         _photoAnalysis.Clear();
-        Debug.Log("Test: " );
         for(int x = 0; x < _resolutionPhoto.x; x++){
             for(int y = 0; y < _resolutionPhoto.y; y++){
                 // not entirely sure why, but the image was flipped when I applied it to the Texture2D
@@ -93,10 +119,9 @@ public class CameraController : MonoBehaviour
                 _photoAnalysis.Add(new Vector2Int(x, y), pixelColor);
             }
         }
+        _photoAnalysisDict.Add(_photoCount, _photoAnalysis);
 
         CreateRender();
-        Debug.Log("Photo taken");
-        
     }
 
     private void CreateRender(){
@@ -110,5 +135,10 @@ public class CameraController : MonoBehaviour
         newRender.Apply();
 
         _photoRender = newRender;
+        _photoRenderDict.Add(_photoCount, _photoRender);
+    }
+
+    private void DisplayNewPhoto(int displayNumber){
+        _displayObject.GetComponent<Renderer>().material.mainTexture = _photoRenderDict[displayNumber];
     }
 }
