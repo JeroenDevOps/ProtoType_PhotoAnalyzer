@@ -16,10 +16,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] private GameObject _displayObject;
     private Vector2 _resolutionPhoto;
     private Vector2 _resolutionCamera;
-    private Dictionary<Vector2Int, Color> _photoAnalysis = new Dictionary<Vector2Int, Color>(); //(temp) dictionary for the photo analysis AND render creation
+    private Dictionary<Vector2Int, PhotoObjectDetail> _photoAnalysis = new Dictionary<Vector2Int, PhotoObjectDetail>(); //(temp) dictionary for the photo analysis AND render creation
     private int _photoCount = 0;
     private int _photoDisplayNumber = -999; // set default as a number that will never be used
-    private Dictionary<int, Dictionary<Vector2Int, Color>> _photoAnalysisDict = new Dictionary<int, Dictionary<Vector2Int, Color>>(); //dictionary for the photo analysis of all photos
+    private Dictionary<int, Dictionary<Vector2Int, PhotoObjectDetail>> _photoAnalysisDict = new Dictionary<int, Dictionary<Vector2Int, PhotoObjectDetail>>(); //dictionary for the photo analysis of all photos
     private Texture2D _photoRender; 
     private Dictionary<int, Texture2D> _photoRenderDict = new Dictionary<int, Texture2D>(); //dictionary for the render of all photos
 
@@ -108,28 +108,31 @@ public class CameraController : MonoBehaviour
                 float rayOriginY = _resolutionCamera.y - (y / _resolutionPhoto.y) * _resolutionCamera.y;
                 
                 Vector3 rayOrigin = new Vector3(rayOriginX, rayOriginY, 0);
-                Color pixelColor = Color.black;
+                PhotoObjectDetail photoDetails = new PhotoObjectDetail();
                 if(Physics.Raycast(_camPhoto.ScreenPointToRay(rayOrigin), out RaycastHit hit, Mathf.Infinity)){
-                    
                     if((_raycastLayer & (1 << hit.collider.gameObject.layer)) != 0){ //if the layer of the object hit is in the layermask
-                        pixelColor = hit.collider.gameObject.GetComponent<PhotoObjectDetailController>().GetColor();
+                        photoDetails = hit.collider.gameObject.GetComponent<PhotoObjectDetailController>().GetPhotoObjectDetail();
                     }
                 }
                 
-                _photoAnalysis.Add(new Vector2Int(x, y), pixelColor);
+                _photoAnalysis.Add(new Vector2Int(x, y), photoDetails);
             }
         }
         _photoAnalysisDict.Add(_photoCount, _photoAnalysis);
 
-        CreateRender();
+        CreateRender(_photoAnalysis);
     }
 
-    private void CreateRender(){
+    private void CreateRender(Dictionary<Vector2Int, PhotoObjectDetail> photoAnalysisResults){
         Texture2D newRender = new Texture2D((int) _resolutionPhoto.x, (int) _resolutionPhoto.y);
         for(int x = 0; x < _resolutionPhoto.x; x++){
             for(int y = 0; y < _resolutionPhoto.y; y++){
-                Color pixelColor = _photoAnalysis[new Vector2Int(x,y)];
-                newRender.SetPixel(x, y, pixelColor);
+                PhotoObjectDetail photoDetail = photoAnalysisResults[new Vector2Int(x,y)];
+                if(photoDetail == null){
+                    newRender.SetPixel(x, y, Color.black);
+                    continue;
+                }
+                newRender.SetPixel(x, y, photoDetail.rendercolor);
             }
         }
         newRender.Apply();

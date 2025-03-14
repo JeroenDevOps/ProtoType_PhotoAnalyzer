@@ -16,6 +16,17 @@
         ii.) Apply the Texture2D to a plane
 4. [x] Display the photo on a plane
 5. [x] Store multiple photos (in a dictionary?) and make it able to display them. To start, just make it possible to switch between them on the same render object (plane).
-6. ...
+6. [x] Create PhotoObjectDetail class and use this for the photo analysis, allowing multiple stats to be tracked per photo.
+7. Change the 'CreateRender' method into a 'ProcessPhoto' method that does both rendering and score calculation.
+8. Create TestScene to get a feel for a real game scene
+
+
+
+
+Far future steps:
+[i] Post-scene photo analysis with name and score.
+[ii] During photo analysis, show which part is being analysed (highlighted in some way)
+[iii] Add a "photo album" to the game??
+[iv] ...
 
 */
