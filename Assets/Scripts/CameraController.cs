@@ -83,7 +83,7 @@ public class CameraController : MonoBehaviour
             }
         }
         if(_photoDisplayNumber != -999 && currentPhotoDisplay != _photoDisplayNumber){
-            DisplayNewPhoto(_photoDisplayNumber);
+            _displayObject.GetComponent<Renderer>().material.mainTexture = _photoRenderDict[_photoDisplayNumber];
             Debug.Log("Photoscore: " + _photoScoreDict[_photoDisplayNumber]);
         }
         #endregion 
@@ -98,7 +98,6 @@ public class CameraController : MonoBehaviour
         _camPhoto.transform.position += movementInput * moveSpeed * Time.deltaTime;
         #endregion
     }
-
 
     private void TakePicture(){
         _photoAnalysis.Clear();
@@ -146,22 +145,14 @@ public class CameraController : MonoBehaviour
             }
         }
         newRender.Apply();
-
         _photoRender = newRender;
         _photoRenderDict.Add(_photoCount, _photoRender);
 
-        _photoScoreDict.Add(_photoCount, CalculateScore(scoreAnalysisDict));
-    }
-
-    private void DisplayNewPhoto(int displayNumber){
-        _displayObject.GetComponent<Renderer>().material.mainTexture = _photoRenderDict[displayNumber];
-    }
-    
-    private int CalculateScore(Dictionary<string, int> scoreAnalysisDict){
         int score = 0;
         foreach(KeyValuePair<string, int> scoreAnalysis in scoreAnalysisDict){
             score += scoreAnalysis.Value;
         }
-        return score;
+        _photoScoreDict.Add(_photoCount, score);
     }
+
 }
