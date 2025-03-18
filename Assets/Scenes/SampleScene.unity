@@ -155,7 +155,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 813e0470186c5634d981a16f007db221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: Plane 1
   _rendercolor: {r: 0, g: 0.046658993, b: 1, a: 1}
+  _score: 10
 --- !u!64 &667852613
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -618,7 +620,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 813e0470186c5634d981a16f007db221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: 
   _rendercolor: {r: 1, g: 0, b: 0.792531, a: 1}
+  _score: 20
 --- !u!135 &1148188180
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -876,7 +880,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 813e0470186c5634d981a16f007db221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: 
   _rendercolor: {r: 1, g: 0.98393744, b: 0, a: 1}
+  _score: 0
 --- !u!1 &1820366004
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,7 +968,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 813e0470186c5634d981a16f007db221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: 
   _rendercolor: {r: 0, g: 1, b: 0.02256751, a: 1}
+  _score: 10
 --- !u!64 &2127207867
 MeshCollider:
   m_ObjectHideFlags: 0

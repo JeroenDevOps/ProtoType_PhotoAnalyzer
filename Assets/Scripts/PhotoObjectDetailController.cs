@@ -15,6 +15,7 @@ public class PhotoObjectDetailController : MonoBehaviour
         _pod.name = _name;
         _pod.rendercolor = _rendercolor;
         _pod.score = _score;
+        _pod.objectId = Guid.NewGuid().ToString();
     }
 
     public PhotoObjectDetail GetPhotoObjectDetail(){

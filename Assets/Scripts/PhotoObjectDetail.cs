@@ -7,4 +7,5 @@ public class PhotoObjectDetail
     public string name;
     public Color rendercolor;
     public int score;
+    public string objectId;
 }

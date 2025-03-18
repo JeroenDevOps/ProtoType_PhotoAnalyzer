@@ -22,6 +22,7 @@ public class CameraController : MonoBehaviour
     private Dictionary<int, Dictionary<Vector2Int, PhotoObjectDetail>> _photoAnalysisDict = new Dictionary<int, Dictionary<Vector2Int, PhotoObjectDetail>>(); //dictionary for the photo analysis of all photos
     private Texture2D _photoRender; 
     private Dictionary<int, Texture2D> _photoRenderDict = new Dictionary<int, Texture2D>(); //dictionary for the render of all photos
+    private Dictionary<int, int> _photoScoreDict = new Dictionary<int, int>(); //dictionary for the score of all photos
 
     private bool _isPhotoMode;
 
@@ -83,6 +84,7 @@ public class CameraController : MonoBehaviour
         }
         if(_photoDisplayNumber != -999 && currentPhotoDisplay != _photoDisplayNumber){
             DisplayNewPhoto(_photoDisplayNumber);
+            Debug.Log("Photoscore: " + _photoScoreDict[_photoDisplayNumber]);
         }
         #endregion 
         #endregion
@@ -120,28 +122,46 @@ public class CameraController : MonoBehaviour
         }
         _photoAnalysisDict.Add(_photoCount, _photoAnalysis);
 
-        CreateRender(_photoAnalysis);
+        ProcessAnalysis(_photoAnalysis);
     }
 
-    private void CreateRender(Dictionary<Vector2Int, PhotoObjectDetail> photoAnalysisResults){
+    private void ProcessAnalysis(Dictionary<Vector2Int, PhotoObjectDetail> photoAnalysisResults){
         Texture2D newRender = new Texture2D((int) _resolutionPhoto.x, (int) _resolutionPhoto.y);
+        Dictionary<string, int> scoreAnalysisDict = new Dictionary<string, int>();
         for(int x = 0; x < _resolutionPhoto.x; x++){
             for(int y = 0; y < _resolutionPhoto.y; y++){
+                // Render photo onto Texture2D
                 PhotoObjectDetail photoDetail = photoAnalysisResults[new Vector2Int(x,y)];
-                if(photoDetail == null){
+                if(photoDetail == null || photoDetail.objectId == null){
                     newRender.SetPixel(x, y, Color.black);
                     continue;
+                } else {
+                    newRender.SetPixel(x, y, photoDetail.rendercolor);
+
+                    // Score, only counting unique objects
+                    if(!scoreAnalysisDict.ContainsKey(photoDetail.objectId)){
+                        scoreAnalysisDict.Add(photoDetail.objectId, photoDetail.score);
+                    }
                 }
-                newRender.SetPixel(x, y, photoDetail.rendercolor);
             }
         }
         newRender.Apply();
 
         _photoRender = newRender;
         _photoRenderDict.Add(_photoCount, _photoRender);
+
+        _photoScoreDict.Add(_photoCount, CalculateScore(scoreAnalysisDict));
     }
 
     private void DisplayNewPhoto(int displayNumber){
         _displayObject.GetComponent<Renderer>().material.mainTexture = _photoRenderDict[displayNumber];
+    }
+    
+    private int CalculateScore(Dictionary<string, int> scoreAnalysisDict){
+        int score = 0;
+        foreach(KeyValuePair<string, int> scoreAnalysis in scoreAnalysisDict){
+            score += scoreAnalysis.Value;
+        }
+        return score;
     }
 }
