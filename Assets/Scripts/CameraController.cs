@@ -84,7 +84,7 @@ public class CameraController : MonoBehaviour
         }
         if(_photoDisplayNumber != -999 && currentPhotoDisplay != _photoDisplayNumber){
             _displayObject.GetComponent<Renderer>().material.mainTexture = _photoRenderDict[_photoDisplayNumber];
-            Debug.Log("Photoscore: " + _photoScoreDict[_photoDisplayNumber]);
+            Debug.Log("Photo #" + _photoDisplayNumber + " score: " + _photoScoreDict[_photoDisplayNumber]);
         }
         #endregion 
         #endregion

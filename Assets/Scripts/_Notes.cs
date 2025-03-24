@@ -19,6 +19,7 @@
 6. [x] Create PhotoObjectDetail class and use this for the photo analysis, allowing multiple stats to be tracked per photo.
 7. [x] Change the 'CreateRender' method into a 'ProcessAnalysis' method that does both rendering and score calculation.
 8. Create TestScene to get a feel for a real game scene
+9. 
 
 
 
