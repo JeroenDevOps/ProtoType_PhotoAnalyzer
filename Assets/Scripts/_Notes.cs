@@ -4,9 +4,9 @@
 
 
 /* ACTIONS:
-1. [x] Setup test scene
-2. [x] When holding right click, use a secondary zoomed in (lower res) camera
-3. [x] When zoomed in, click left click to snap the picture 
+01. [x] Setup test scene
+02. [x] When holding right click, use a secondary zoomed in (lower res) camera
+03. [x] When zoomed in, click left click to snap the picture 
     [x] a.) How to take the photo?
         https://discussions.unity.com/t/how-to-save-a-picture-take-screenshot-from-a-camera-in-game/5792/3
         i.) how to take the photo so that I can actually analyze it? Or is analyzing needed early and then the result is compiled into an image?
@@ -14,12 +14,13 @@
     [x] b.) How to "store" the photo (for game use only, so do not store to disk)?
         i.) Create a Texture2D and apply the colors to it
         ii.) Apply the Texture2D to a plane
-4. [x] Display the photo on a plane
-5. [x] Store multiple photos (in a dictionary?) and make it able to display them. To start, just make it possible to switch between them on the same render object (plane).
-6. [x] Create PhotoObjectDetail class and use this for the photo analysis, allowing multiple stats to be tracked per photo.
-7. [x] Change the 'CreateRender' method into a 'ProcessAnalysis' method that does both rendering and score calculation.
-8. Create TestScene to get a feel for a real game scene
-9. 
+04. [x] Display the photo on a plane
+05. [x] Store multiple photos (in a dictionary?) and make it able to display them. To start, just make it possible to switch between them on the same render object (plane).
+06. [x] Create PhotoObjectDetail class and use this for the photo analysis, allowing multiple stats to be tracked per photo.
+07. [x] Change the 'CreateRender' method into a 'ProcessAnalysis' method that does both rendering and score calculation.
+08. [x] Create UI image display and modify the code to utilize this UI component instead of the plane 
+9. Create TestScene to get a feel for a real game scene
+10. 
 
 
 
