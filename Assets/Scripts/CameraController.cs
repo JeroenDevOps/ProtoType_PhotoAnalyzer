@@ -111,7 +111,7 @@ public class CameraController : MonoBehaviour
             for(int y = 0; y < _resolutionPhoto.y; y++){
                 float rayOriginX = 0f;
                 float rayOriginY = 0f;
-                // Renderer component needs flipped Texture2D, RawImage does not
+                // Renderer component needs flipped Texture2D due to plane rotation, RawImage does not
                 if(_displayObject.TryGetComponent<Renderer>(out Renderer rendererComponent) != false){
                     rayOriginX = _resolutionCamera.x - (x / _resolutionPhoto.x) * _resolutionCamera.x;
                     rayOriginY = _resolutionCamera.y - (y / _resolutionPhoto.y) * _resolutionCamera.y;

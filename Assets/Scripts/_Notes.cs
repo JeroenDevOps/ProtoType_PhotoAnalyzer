@@ -19,7 +19,9 @@
 06. [x] Create PhotoObjectDetail class and use this for the photo analysis, allowing multiple stats to be tracked per photo.
 07. [x] Change the 'CreateRender' method into a 'ProcessAnalysis' method that does both rendering and score calculation.
 08. [x] Create UI image display and modify the code to utilize this UI component instead of the plane 
-9. Create TestScene to get a feel for a real game scene
+9. Create TestScene to get a feel for a real game scene 
+    a.) [x] add 2DSprite package
+    b.) Insert sprites into scene
 10. 
 
 
