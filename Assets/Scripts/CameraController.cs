@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class CameraController : MonoBehaviour
@@ -83,7 +84,12 @@ public class CameraController : MonoBehaviour
             }
         }
         if(_photoDisplayNumber != -999 && currentPhotoDisplay != _photoDisplayNumber){
-            _displayObject.GetComponent<Renderer>().material.mainTexture = _photoRenderDict[_photoDisplayNumber];
+            if(_displayObject.TryGetComponent<Renderer>(out Renderer rendererComponent) != false){
+                rendererComponent.material.mainTexture = _photoRenderDict[_photoDisplayNumber];
+            }
+            if(_displayObject.TryGetComponent<RawImage>(out RawImage imageComponent) != false){
+                imageComponent.texture = _photoRenderDict[_photoDisplayNumber];
+            }
             Debug.Log("Photo #" + _photoDisplayNumber + " score: " + _photoScoreDict[_photoDisplayNumber]);
         }
         #endregion 
@@ -103,10 +109,17 @@ public class CameraController : MonoBehaviour
         _photoAnalysis.Clear();
         for(int x = 0; x < _resolutionPhoto.x; x++){
             for(int y = 0; y < _resolutionPhoto.y; y++){
-                // not entirely sure why, but the image was flipped when I applied it to the Texture2D
-                // so substracting from the full resolution made the image come out correctly
-                float rayOriginX = _resolutionCamera.x - (x / _resolutionPhoto.x) * _resolutionCamera.x;
-                float rayOriginY = _resolutionCamera.y - (y / _resolutionPhoto.y) * _resolutionCamera.y;
+                float rayOriginX = 0f;
+                float rayOriginY = 0f;
+                // Renderer component needs flipped Texture2D, RawImage does not
+                if(_displayObject.TryGetComponent<Renderer>(out Renderer rendererComponent) != false){
+                    rayOriginX = _resolutionCamera.x - (x / _resolutionPhoto.x) * _resolutionCamera.x;
+                    rayOriginY = _resolutionCamera.y - (y / _resolutionPhoto.y) * _resolutionCamera.y;
+                } else if(_displayObject.TryGetComponent<RawImage>(out RawImage imageComponent) != false){
+                    rayOriginX = (x / _resolutionPhoto.x) * _resolutionCamera.x;
+                    rayOriginY = (y / _resolutionPhoto.y) * _resolutionCamera.y;
+                }
+                    
                 
                 Vector3 rayOrigin = new Vector3(rayOriginX, rayOriginY, 0);
                 PhotoObjectDetail photoDetails = new PhotoObjectDetail();
