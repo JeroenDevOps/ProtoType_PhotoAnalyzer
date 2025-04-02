@@ -19,10 +19,15 @@
 06. [x] Create PhotoObjectDetail class and use this for the photo analysis, allowing multiple stats to be tracked per photo.
 07. [x] Change the 'CreateRender' method into a 'ProcessAnalysis' method that does both rendering and score calculation.
 08. [x] Create UI image display and modify the code to utilize this UI component instead of the plane 
-9. Create TestScene to get a feel for a real game scene 
+09.  [x] Create TestScene to get a feel for a real game scene 
     a.) [x] add 2DSprite package
-    b.) Insert sprites into scene
-10. 
+    b.) [x] Insert sprites into scene
+    >   Problem: Sprites are 2D objects and require Physics2D colliders to be detected by raycasting.
+                 What do I want to do? 3D models or 2D sprites?
+        Answer: 3D models are easier to set up and provide better layering and raycasting options.
+10. [x] Create test assets in 3D, that still look like 2D sprites or work on 'artstyle'
+11. [x] Set up first 3d object in the test scene and make it possible to take a photo of it.
+12. Think about art style and how to make it look good. 
 
 
 
