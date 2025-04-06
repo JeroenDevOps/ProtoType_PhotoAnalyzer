@@ -26,9 +26,18 @@
                  What do I want to do? 3D models or 2D sprites?
         Answer: 3D models are easier to set up and provide better layering and raycasting options.
 10. [x] Create test assets in 3D, that still look like 2D sprites or work on 'artstyle'
-11. [x] Set up first 3d object in the test scene and make it possible to take a photo of it.
+11. [x] Set up first test 3d object in the test scene and make it possible to take a photo of it.
 12. Think about art style and how to make it look good. 
-
+    a). Draw a character digitally
+    b). Create the 3D outline for the character and use the character as the texture
+    c). Import the character into the Unity scene and check if it works
+    d). If it works, check if the workflow can be improved for future characters
+13. Create a sample scene to reflect a 'real' static scene
+14. Create a sample scene to reflect a 'real' dynamic scene 
+    a). Check how to animate the scene
+    b). How to tell a simple story with the scene
+    c). Make things happen in different areas of the scene, so that the player has to move around to see everything and take photos of it
+15. Create a post-scene end-screen with the photos taken and a score for each photo 
 
 
 
