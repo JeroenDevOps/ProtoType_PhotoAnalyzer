@@ -28,10 +28,9 @@
 10. [x] Create test assets in 3D, that still look like 2D sprites or work on 'artstyle'
 11. [x] Set up first test 3d object in the test scene and make it possible to take a photo of it.
 12. Think about art style and how to make it look good. 
-    a). Draw a character digitally
-    b). Create the 3D outline for the character and use the character as the texture
-    c). Import the character into the Unity scene and check if it works
-    d). If it works, check if the workflow can be improved for future characters
+    a.) [x] Try-out new style with 3D models and see if it works
+    b.) [x] Urgent: Fix subobjects on the test-model:
+        i.) [x] if the object does not have a PhotoObjectDetailController script, check if the parent has one and use that one instead    
 13. Create a sample scene to reflect a 'real' static scene
 14. Create a sample scene to reflect a 'real' dynamic scene 
     a). Check how to animate the scene

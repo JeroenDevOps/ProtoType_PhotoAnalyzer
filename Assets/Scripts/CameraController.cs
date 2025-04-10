@@ -122,10 +122,23 @@ public class CameraController : MonoBehaviour
                     
                 
                 Vector3 rayOrigin = new Vector3(rayOriginX, rayOriginY, 0);
-                PhotoObjectDetail photoDetails = new PhotoObjectDetail();
+                PhotoObjectDetail photoDetails = null;
                 if(Physics.Raycast(_camPhoto.ScreenPointToRay(rayOrigin), out RaycastHit hit, Mathf.Infinity)){
                     if((_raycastLayer & (1 << hit.collider.gameObject.layer)) != 0){ //if the layer of the object hit is in the layermask
-                        photoDetails = hit.collider.gameObject.GetComponent<PhotoObjectDetailController>().GetPhotoObjectDetail();
+                        PhotoObjectDetailController photoObjectDetailCtrl = hit.collider.gameObject.GetComponent<PhotoObjectDetailController>();
+                        if(photoObjectDetailCtrl != null){
+                            photoDetails = photoObjectDetailCtrl.GetPhotoObjectDetail();
+                        } else {
+                            // Check if the parent has a PhotoObjectDetailController script and use that one instead
+                            Transform parentTransform = hit.collider.gameObject.transform.parent;
+                            while(parentTransform != null && photoDetails == null){
+                                photoObjectDetailCtrl = parentTransform.GetComponent<PhotoObjectDetailController>();
+                                if(photoObjectDetailCtrl != null){
+                                    photoDetails = photoObjectDetailCtrl.GetPhotoObjectDetail();
+                                }
+                                parentTransform = parentTransform.parent;
+                            }
+                        }
                     }
                 }
                 
