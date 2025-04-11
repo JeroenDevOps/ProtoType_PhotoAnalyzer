@@ -2,7 +2,6 @@
 *********** NOTES **************
 *******************************/
 
-
 /* ACTIONS:
 01. [x] Setup test scene
 02. [x] When holding right click, use a secondary zoomed in (lower res) camera
@@ -30,7 +29,10 @@
 12. Think about art style and how to make it look good. 
     a.) [x] Try-out new style with 3D models and see if it works
     b.) [x] Urgent: Fix subobjects on the test-model:
-        i.) [x] if the object does not have a PhotoObjectDetailController script, check if the parent has one and use that one instead    
+        i.) [x] if the object does not have a PhotoObjectDetailController script, check if the parent has one and use that one instead  
+    c.) [x] Rework texturing of 3D object so all UV maps are on 1 image, modifying the image may become possible with ChatGPT
+    d.) Test ChatGPT for creating a texture for the 3D object
+    e.) Improve modelling/texturing workflow
 13. Create a sample scene to reflect a 'real' static scene
 14. Create a sample scene to reflect a 'real' dynamic scene 
     a). Check how to animate the scene
@@ -45,5 +47,15 @@ Far future steps:
 [ii] During photo analysis, show which part is being analysed (highlighted in some way)
 [iii] Add a "photo album" to the game??
 [iv] ...
+
+
+
+
+
+Notes:
+- When importing a 3D model into the scene, make sure the following is done:
+    - Add MeshColliders to all objects of the model
+    - Add PhotoObjectDetailController to the parent object of the model
+
 
 */
