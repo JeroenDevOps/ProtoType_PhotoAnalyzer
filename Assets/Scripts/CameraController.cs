@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -90,7 +91,7 @@ public class CameraController : MonoBehaviour
             if(_displayObject.TryGetComponent<RawImage>(out RawImage imageComponent) != false){
                 imageComponent.texture = _photoRenderDict[_photoDisplayNumber];
             }
-            Debug.Log("Photo #" + _photoDisplayNumber + " score: " + _photoScoreDict[_photoDisplayNumber]);
+            UnityEngine.Debug.Log("Photo #" + _photoDisplayNumber + " score: " + _photoScoreDict[_photoDisplayNumber]);
         }
         #endregion 
         #endregion
@@ -158,7 +159,6 @@ public class CameraController : MonoBehaviour
                 // Render photo onto Texture2D
                 PhotoObjectDetail photoDetail = photoAnalysisResults[new Vector2Int(x,y)];
                 if(photoDetail == null || photoDetail.objectId == null){
-                    newRender.SetPixel(x, y, Color.black);
                     continue;
                 } else {
                     newRender.SetPixel(x, y, photoDetail.rendercolor);
