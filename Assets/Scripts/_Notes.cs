@@ -33,12 +33,15 @@
     c.) [x] Rework texturing of 3D object so all UV maps are on 1 image, modifying the image may become possible with ChatGPT
     d.) Test ChatGPT for creating a texture for the 3D object
     e.) Improve modelling/texturing workflow
-13. Create a sample scene to reflect a 'real' static scene
-14. Create a sample scene to reflect a 'real' dynamic scene 
+13. Make the photos be real photos with the score colors inserted into the photo
+    a.) Check how to take a screenshop in Unity (https://gamedevbeginner.com/how-to-capture-the-screen-in-unity-3-methods/)
+    b.) Open the screenshot as a Texture2D and apply the score colors to it. (Make the default colour not be black anymore, just skip)
+14. Create a sample scene to reflect a 'real' static scene
+15. Create a sample scene to reflect a 'real' dynamic scene 
     a). Check how to animate the scene
     b). How to tell a simple story with the scene
     c). Make things happen in different areas of the scene, so that the player has to move around to see everything and take photos of it
-15. Create a post-scene end-screen with the photos taken and a score for each photo 
+16. Create a post-scene end-screen with the photos taken and a score for each photo 
 
 
 
@@ -56,6 +59,8 @@ Notes:
 - When importing a 3D model into the scene, make sure the following is done:
     - Add MeshColliders to all objects of the model
     - Add PhotoObjectDetailController to the parent object of the model
+- It's possible to create a material with the image of the modified base UV mapping texture and apply it to the model
+    - This allows for randomization options of the characters by e.g. using 10 different textures per model and applying them randomly to the model
 
 
 */
