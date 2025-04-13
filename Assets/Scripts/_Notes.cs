@@ -33,6 +33,8 @@
     c.) [x] Rework texturing of 3D object so all UV maps are on 1 image, modifying the image may become possible with ChatGPT
     d.) Test ChatGPT for creating a texture for the 3D object
     e.) Improve modelling/texturing workflow
+        i.) [x] Create photoshop file for UV map texture by using cutout/masking layer
+        ii.) ...
 13. Make the photos be real photos with the score colors inserted into the photo
     a.) Check how to take a screenshop in Unity (https://gamedevbeginner.com/how-to-capture-the-screen-in-unity-3-methods/)
     b.) Open the screenshot as a Texture2D and apply the score colors to it. (Make the default colour not be black anymore, just skip)
