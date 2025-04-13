@@ -32,6 +32,14 @@
         i.) [x] if the object does not have a PhotoObjectDetailController script, check if the parent has one and use that one instead  
     c.) [x] Rework texturing of 3D object so all UV maps are on 1 image, modifying the image may become possible with ChatGPT
     d.) Test ChatGPT for creating a texture for the 3D object
+        i.) Figure out the appropriate prompt for ChatGPT to create a texture for the 3D object
+            [After uploading the UV map base texture image] 
+            "Hi! First let me explain what this image is: it's the UV map texture for a 3D model I created. In the image the different parts are listed: the body is green, the head is light blue, and the hands are gold. 
+            The blocks in the top right are the outside edges to give the 2D image some depth, but aren't that important for the current use case. 
+            I want you to help me give a texture for this example image. Everything needs to be in the original place and size as in the example image, and needs to fit in the outlines that are shown. 
+            Can you generate a texture image for this UV map, with: the body being a woolen coat, the head being an actual face (but spherical), and the hands have a fleshy texture. 
+            The rest of the image can be made black. "
+        ii.) Test the prompt with ChatGPT and see if it works
     e.) Improve modelling/texturing workflow
         i.) [x] Create photoshop file for UV map texture by using cutout/masking layer
         ii.) ...
