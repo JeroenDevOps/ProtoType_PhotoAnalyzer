@@ -40,12 +40,18 @@
             Can you generate a texture image for this UV map, with: the body being a woolen coat, the head being an actual face (but spherical), and the hands have a fleshy texture. 
             The rest of the image can be made black. "
         ii.) Test the prompt with ChatGPT and see if it works
+            - Refine the different bodyparts in separate paragraphs
+            - Make ChatGPT place the hands in the correct spots
+            - Find a way to make ChatGPT create an actual circular face
+            - Find a way to make ChatGPT create good looking hands
+        iii.) Rough textures are fine, can incorporate it with photoshop. But accurate prompts would save time.
     e.) Improve modelling/texturing workflow
         i.) [x] Create photoshop file for UV map texture by using cutout/masking layer
         ii.) ...
-13. Make the photos be real photos with the score colors inserted into the photo
+13. Make the photos be real screenshots with the score colors inserted into the photo
     a.) Check how to take a screenshop in Unity (https://gamedevbeginner.com/how-to-capture-the-screen-in-unity-3-methods/)
     b.) Open the screenshot as a Texture2D and apply the score colors to it. (Make the default colour not be black anymore, just skip)
+        i.) Probably requires rework of the controller so parts are done asyncronously 
 14. Create a sample scene to reflect a 'real' static scene
 15. Create a sample scene to reflect a 'real' dynamic scene 
     a). Check how to animate the scene
