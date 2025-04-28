@@ -49,9 +49,11 @@
         i.) [x] Create photoshop file for UV map texture by using cutout/masking layer
         ii.) ...
 13. Make the photos be real screenshots with the score colors inserted into the photo
-    a.) Check how to take a screenshop in Unity (https://gamedevbeginner.com/how-to-capture-the-screen-in-unity-3-methods/)
+    a.) Check how to take a screenshot in Unity (https://gamedevbeginner.com/how-to-capture-the-screen-in-unity-3-methods/)
     b.) Open the screenshot as a Texture2D and apply the score colors to it. (Make the default colour not be black anymore, just skip)
         i.) Probably requires rework of the controller so parts are done asyncronously 
+            - [x] Implement screenshot in new Scene with new Controller (TestScene2 + CameraController2)
+            - Implement the photo analysis in the Controller/Scene
 14. Create a sample scene to reflect a 'real' static scene
 15. Create a sample scene to reflect a 'real' dynamic scene 
     a). Check how to animate the scene
