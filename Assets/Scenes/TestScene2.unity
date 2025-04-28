@@ -1849,6 +1849,7 @@ MonoBehaviour:
   _camPhoto: {fileID: 1135089422}
   _moveSpeedMain: 10
   _moveSpeedPhoto: 6
+  _displayObject: {fileID: 1959440791}
 --- !u!1 &1959440791
 GameObject:
   m_ObjectHideFlags: 0
