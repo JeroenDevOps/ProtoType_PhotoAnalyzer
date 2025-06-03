@@ -60,6 +60,7 @@
         i). Do I want a real animation or behaviour (script) driven so there is some room for variation?
     b). How to tell a simple story with the scene
     c). Make things happen in different areas of the scene, so that the player has to move around to see everything and take photos of it
+    d). Is there a way to make the player influence the scene/animations? This would add some interactability (e.g. like Pokemon Snap)
 16. Create a post-scene end-screen with the photos taken and a score for each photo 
 
 
@@ -78,6 +79,7 @@ Notes:
 - When importing a 3D model into the scene, make sure the following is done:
     - Add MeshColliders to all objects of the model
     - Add PhotoObjectDetailController to the parent object of the model
+    - Put scoring objects on the PhotoObject
 - It's possible to create a material with the image of the modified base UV mapping texture and apply it to the model
     - This allows for randomization options of the characters by e.g. using 10 different textures per model and applying them randomly to the model
 
