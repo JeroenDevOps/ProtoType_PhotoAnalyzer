@@ -5,6 +5,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
+/*
+
+THIS CONTROLLER IS USED FOR TAKING A SCREENSHOT OF THE BACKGROUND AND THEN APPLYING THE SCORING COLOURS AND SCORES ONTO IT
+
+*/
+
 public class CameraController2 : MonoBehaviour
 {
     [SerializeField] private Camera _camMain;
@@ -23,8 +29,8 @@ public class CameraController2 : MonoBehaviour
     private Vector2 _resolutionPhoto;
     private Vector2 _resolutionCamera;
     private Dictionary<Vector2Int, PhotoObjectDetail> _photoAnalysis = new Dictionary<Vector2Int, PhotoObjectDetail>(); //(temp) dictionary for the photo analysis AND render creation
-        private Dictionary<int, Dictionary<Vector2Int, PhotoObjectDetail>> _photoAnalysisDict = new Dictionary<int, Dictionary<Vector2Int, PhotoObjectDetail>>(); //dictionary for the photo analysis of all photos
-    private Texture2D _photoRender; 
+    private Dictionary<int, Dictionary<Vector2Int, PhotoObjectDetail>> _photoAnalysisDict = new Dictionary<int, Dictionary<Vector2Int, PhotoObjectDetail>>(); //dictionary for the photo analysis of all photos
+    private Texture2D _photoRender;
     private Dictionary<int, Texture2D> _photoRenderDict = new Dictionary<int, Texture2D>(); //dictionary for the render of all photos
     private Dictionary<int, int> _photoScoreDict = new Dictionary<int, int>(); //dictionary for the score of all photos
 
@@ -140,14 +146,14 @@ public class CameraController2 : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         // RenderTexture renderTexture = new RenderTexture(Screen.width, Screen.height, 16);
-        RenderTexture renderTexture = new RenderTexture((int) _resolutionPhoto.x, (int) _resolutionPhoto.y, 16);
+        RenderTexture renderTexture = new RenderTexture((int)_resolutionPhoto.x, (int)_resolutionPhoto.y, 16);
         _camPhoto.targetTexture = renderTexture;
         // Texture2D photo = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-        Texture2D photo = new Texture2D((int) _resolutionPhoto.x, (int) _resolutionPhoto.y, TextureFormat.RGB24, false);
+        Texture2D photo = new Texture2D((int)_resolutionPhoto.x, (int)_resolutionPhoto.y, TextureFormat.RGB24, false);
         _camPhoto.Render();
         RenderTexture.active = renderTexture;
         // photo.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-        photo.ReadPixels(new Rect(0, 0, (int) _resolutionPhoto.x, (int) _resolutionPhoto.y), 0, 0);
+        photo.ReadPixels(new Rect(0, 0, (int)_resolutionPhoto.x, (int)_resolutionPhoto.y), 0, 0);
         photo.Apply();
         _camPhoto.targetTexture = null;
         RenderTexture.active = null;
@@ -159,25 +165,32 @@ public class CameraController2 : MonoBehaviour
         _forceDisplay = true;
         _forceAnalysis = true;
     }
-    
-    private void ProcessPicture(){
+
+    private void ProcessPicture()
+    {
         _photoAnalysis.Clear();
-        for(int x = 0; x < _resolutionPhoto.x; x++){
-            for(int y = 0; y < _resolutionPhoto.y; y++){
+        for (int x = 0; x < _resolutionPhoto.x; x++)
+        {
+            for (int y = 0; y < _resolutionPhoto.y; y++)
+            {
                 float rayOriginX = 0f;
                 float rayOriginY = 0f;
                 // Renderer component needs flipped Texture2D due to plane rotation, RawImage does not
-                if(_displayObject.TryGetComponent<Renderer>(out Renderer rendererComponent) != false){
+                if (_displayObject.TryGetComponent<Renderer>(out Renderer rendererComponent) != false)
+                {
                     rayOriginX = _resolutionCamera.x - (x / _resolutionPhoto.x) * _resolutionCamera.x;
                     rayOriginY = _resolutionCamera.y - (y / _resolutionPhoto.y) * _resolutionCamera.y;
-                } else if(_displayObject.TryGetComponent<RawImage>(out RawImage imageComponent) != false){
+                }
+                else if (_displayObject.TryGetComponent<RawImage>(out RawImage imageComponent) != false)
+                {
                     rayOriginX = (x / _resolutionPhoto.x) * _resolutionCamera.x;
                     rayOriginY = (y / _resolutionPhoto.y) * _resolutionCamera.y;
                 }
-                
+
                 Vector3 rayOrigin = new Vector3(rayOriginX, rayOriginY, 0);
                 PhotoObjectDetail photoDetails = null;
-                if(Physics.Raycast(_camPhoto.ScreenPointToRay(rayOrigin), out RaycastHit hit, Mathf.Infinity)){
+                if (Physics.Raycast(_camPhoto.ScreenPointToRay(rayOrigin), out RaycastHit hit, Mathf.Infinity))
+                {
                     if ((_raycastLayer & (1 << hit.collider.gameObject.layer)) != 0)
                     { //if the layer of the object hit is in the layermask
                         PhotoObjectDetailController photoObjectDetailCtrl = hit.collider.gameObject.GetComponent<PhotoObjectDetailController>();
@@ -201,7 +214,7 @@ public class CameraController2 : MonoBehaviour
                         }
                     }
                 }
-                
+
                 _photoAnalysis.Add(new Vector2Int(x, y), photoDetails);
             }
         }
@@ -210,13 +223,16 @@ public class CameraController2 : MonoBehaviour
         ProcessAnalysis(_photoAnalysis);
     }
 
-    private void ProcessAnalysis(Dictionary<Vector2Int, PhotoObjectDetail> photoAnalysisResults){
+    private void ProcessAnalysis(Dictionary<Vector2Int, PhotoObjectDetail> photoAnalysisResults)
+    {
         Texture2D newRender = _photos[_photoCount - 1];
         Dictionary<string, int> scoreAnalysisDict = new Dictionary<string, int>();
-        for(int x = 0; x < _resolutionPhoto.x; x++){
-            for(int y = 0; y < _resolutionPhoto.y; y++){
+        for (int x = 0; x < _resolutionPhoto.x; x++)
+        {
+            for (int y = 0; y < _resolutionPhoto.y; y++)
+            {
                 // Render photo onto Texture2D
-                PhotoObjectDetail photoDetail = photoAnalysisResults[new Vector2Int(x,y)];
+                PhotoObjectDetail photoDetail = photoAnalysisResults[new Vector2Int(x, y)];
                 if (photoDetail == null || photoDetail.objectId == null)
                 {
                     continue;
@@ -238,9 +254,10 @@ public class CameraController2 : MonoBehaviour
         _photoRenderDict.Add(_photoCount - 1, _photoRender);
 
         int score = 0;
-        foreach(KeyValuePair<string, int> scoreAnalysis in scoreAnalysisDict){
+        foreach (KeyValuePair<string, int> scoreAnalysis in scoreAnalysisDict)
+        {
             score += scoreAnalysis.Value;
         }
-        _photoScoreDict.Add(_photoCount-1, score);
+        _photoScoreDict.Add(_photoCount - 1, score);
     }
 }
